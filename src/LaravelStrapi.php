@@ -24,7 +24,7 @@ class LaravelStrapi
         $this->token = config('strapi.token');
 
         if (!empty($this->token)) {
-            $this->headers['Authorization'] = 'Bearer' . $this->token;
+            $this->headers['Authorization'] = 'Bearer ' . $this->token;
         }
     }
 
