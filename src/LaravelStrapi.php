@@ -28,14 +28,14 @@ class LaravelStrapi
         }
     }
 
-    public function collection(string $type, $sortKey = 'id', $sortOrder = 'DESC', $limit = 20, $start = 0, $fullUrls = true): array
+    public function collection(string $type, $sortKey = 'id', $sortOrder = 'DESC', $limit = 20, $start = 0, $fullUrls = true, $populate = ''): array
     {
         $url = $this->strapiUrl;
         $cacheKey = self::CACHE_KEY . '.collection.' . $type . '.' . $sortKey . '.' . $sortOrder . '.' . $limit . '.' . $start;
 
         // Fetch and cache the collection type
-        $collection = Cache::remember($cacheKey, $this->cacheTime, function () use ($url, $type, $sortKey, $sortOrder, $limit, $start) {
-            $response = Http::withHeaders($this->headers)->get($url . '/' . $type . '?_sort=' . $sortKey . ':' . $sortOrder . '&_limit=' . $limit . '&_start=' . $start);
+        $collection = Cache::remember($cacheKey, $this->cacheTime, function () use ($url, $type, $sortKey, $sortOrder, $limit, $start, $populate) {
+            $response = Http::withHeaders($this->headers)->get($url . '/' . $type . '?_sort=' . $sortKey . ':' . $sortOrder . '&_limit=' . $limit . '&_start=' . $start. '&populate=' . $populate);
             return $response->json();
         });
 
